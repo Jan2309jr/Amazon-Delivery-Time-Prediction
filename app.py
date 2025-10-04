@@ -2,6 +2,11 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
+import os
+
+# ==============================
+# 🔧 Preprocessing Function
+# ==============================
 def preprocess_features(X):
     X = X.copy()
     
@@ -31,18 +36,29 @@ def preprocess_features(X):
     
     return X
 
+# ==============================
+# 🔧 Load Model & Features
+# ==============================
+# Ensure the paths are correct
+base_path = os.path.dirname(__file__)
+model_path = os.path.join(base_path, "best_delivery_model.pkl")
+features_path = os.path.join(base_path, "model_features.pkl")
 
-#loading the model and preproccessing
-best_model = joblib.load("best_delivery_model.pkl")
+best_model = joblib.load(model_path)
+model_features = joblib.load(features_path)  # list of columns used in training
 
-
+# ==============================
+# 🌟 Streamlit App
+# ==============================
 st.set_page_config(page_title="Amazon Delivery Time Predictor", layout="centered")
 st.title("📦 Amazon Delivery Time Prediction")
-
 st.markdown("""
 Predict estimated delivery time for your order based on agent, traffic, weather, and product details.
 """)
-#user inputs
+
+# ==============================
+# 📝 User Inputs
+# ==============================
 with st.form("input_form"):
     st.subheader("Order Details")
     
@@ -63,7 +79,10 @@ with st.form("input_form"):
     order_time = st.time_input("Order Time")
     
     submitted = st.form_submit_button("Predict Delivery Time")
-#prediction
+
+# ==============================
+# 💡 Prediction Logic
+# ==============================
 if submitted:
     # Create DataFrame for single input
     input_df = pd.DataFrame({
@@ -81,9 +100,12 @@ if submitted:
 
     # Preprocess input
     processed_input = preprocess_features(input_df)
-    
+
+    # Reorder columns to match model's training data
+    processed_input = processed_input.reindex(columns=model_features, fill_value=0)
+
     # Predict
     predicted_time = best_model.predict(processed_input)[0]
-    
+
     # Display Result
     st.success(f"Estimated Delivery Time: **{predicted_time:.2f} hours** 🚚")
