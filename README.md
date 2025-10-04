@@ -6,10 +6,8 @@
 
 The project focuses on predicting delivery times for e-commerce orders by analyzing multiple factors, including:
 
-* Product size and category
-* Distance between store and delivery location
-* Traffic and weather conditions
-* Shipping method
+<img width="430" height="546" alt="image" src="https://github.com/user-attachments/assets/08d26eff-5694-4bb9-9d98-01c4414d5a1a" />
+
 
 The goal is to preprocess the dataset, perform EDA, develop regression models, and deploy a Streamlit application where users can input order details and get estimated delivery times.
 
@@ -21,8 +19,7 @@ The goal is to preprocess the dataset, perform EDA, develop regression models, a
 * **Data Cleaning & Preprocessing**: Handling missing values, duplicates, and standardizing categorical variables.
 * **Exploratory Data Analysis (EDA)**: Identifying trends, patterns, and correlations using visualizations.
 * **Feature Engineering**: Time-based features, geospatial calculations (distance between store and drop locations).
-* **Machine Learning & Regression Modeling**: Linear Regression, Random Forest Regressor, Gradient Boosting Regressor.
-* **MLflow**: Model tracking, comparison, and versioning.
+* **Machine Learning & Regression Modeling**: LightGBM, XGBoost, CatBoost.
 * **Streamlit**: Building an interactive web interface for real-time predictions.
 
 ## 🌐 Domain
